@@ -1,177 +1,100 @@
 import { Variants } from "framer-motion";
 
+const ease = [0.22, 1, 0.36, 1] as const; // fast-out curve — snappy feel
+
 export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
-  },
+  hidden:  { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.42, ease } },
 };
 
 export const fadeDown: Variants = {
-  hidden: { opacity: 0, y: -40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
-  },
+  hidden:  { opacity: 0, y: -24 },
+  visible: { opacity: 1, y: 0,  transition: { duration: 0.42, ease } },
 };
 
 export const fadeIn: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { duration: 0.6, ease: "easeOut" },
-  },
+  hidden:  { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.35, ease: "easeOut" } },
 };
 
 export const slideLeft: Variants = {
-  hidden: { opacity: 0, x: -60 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] },
-  },
+  hidden:  { opacity: 0, x: -40 },
+  visible: { opacity: 1, x: 0,  transition: { duration: 0.45, ease } },
 };
 
 export const slideRight: Variants = {
-  hidden: { opacity: 0, x: 60 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] },
-  },
+  hidden:  { opacity: 0, x: 40 },
+  visible: { opacity: 1, x: 0,  transition: { duration: 0.45, ease } },
 };
 
 export const scaleIn: Variants = {
-  hidden: { opacity: 0, scale: 0.85 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
-  },
+  hidden:  { opacity: 0, scale: 0.9 },
+  visible: { opacity: 1, scale: 1,  transition: { duration: 0.38, ease } },
 };
 
 export const scaleInSpring: Variants = {
-  hidden: { opacity: 0, scale: 0.8 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: { type: "spring", stiffness: 260, damping: 20 },
-  },
+  hidden:  { opacity: 0, scale: 0.85 },
+  visible: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 320, damping: 24 } },
 };
 
+// Faster stagger — children start sooner, last child doesn't lag
 export const staggerContainer: Variants = {
   hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.1,
-    },
-  },
+  visible: { transition: { staggerChildren: 0.07, delayChildren: 0.05 } },
 };
 
 export const staggerContainerFast: Variants = {
   hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.06,
-      delayChildren: 0.05,
-    },
-  },
+  visible: { transition: { staggerChildren: 0.045, delayChildren: 0.03 } },
 };
 
 export const staggerContainerSlow: Variants = {
   hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.2,
-      delayChildren: 0.15,
-    },
-  },
+  visible: { transition: { staggerChildren: 0.12, delayChildren: 0.08 } },
 };
 
 export const characterReveal: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.05, ease: "easeOut" },
-  },
+  hidden:  { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0,  transition: { duration: 0.04, ease: "easeOut" } },
 };
 
 export const timelineItem: Variants = {
-  hidden: { opacity: 0, x: -30 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
-  },
+  hidden:  { opacity: 0, x: -24 },
+  visible: { opacity: 1, x: 0,  transition: { duration: 0.42, ease } },
 };
 
 export const cardHover = {
-  rest: { scale: 1, y: 0 },
-  hover: {
-    scale: 1.02,
-    y: -6,
-    transition: { duration: 0.3, ease: "easeOut" },
-  },
+  rest:  { scale: 1,    y: 0  },
+  hover: { scale: 1.02, y: -5, transition: { duration: 0.2, ease: "easeOut" } },
 };
 
 export const glowHover = {
-  rest: { boxShadow: "0 0 0px rgba(124, 58, 237, 0)" },
-  hover: {
-    boxShadow: "0 0 30px rgba(124, 58, 237, 0.4)",
-    transition: { duration: 0.3 },
-  },
+  rest:  { boxShadow: "0 0 0px rgba(124,58,237,0)"   },
+  hover: { boxShadow: "0 0 28px rgba(124,58,237,0.38)", transition: { duration: 0.2 } },
 };
 
 export const navbarVariants: Variants = {
-  hidden: { opacity: 0, y: -20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: "easeOut" },
-  },
+  hidden:  { opacity: 0, y: -16 },
+  visible: { opacity: 1, y: 0,  transition: { duration: 0.38, ease: "easeOut" } },
 };
 
 export const loadingVariants: Variants = {
   initial: { opacity: 1 },
-  exit: {
-    opacity: 0,
-    transition: { duration: 0.6, ease: "easeInOut" },
-  },
+  exit:    { opacity: 0, transition: { duration: 0.4, ease: "easeInOut" } },
 };
 
 export const heroTextReveal: Variants = {
-  hidden: { opacity: 0, y: 60, rotateX: -15 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    rotateX: 0,
-    transition: {
-      duration: 0.8,
-      ease: [0.25, 0.46, 0.45, 0.94],
-    },
-  },
+  hidden:  { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0,  transition: { duration: 0.55, ease } },
 };
 
 export const floatAnimation = {
-  y: [0, -20, 0],
-  transition: {
-    duration: 6,
-    repeat: Infinity,
-    ease: "easeInOut",
-  },
+  y: [0, -14, 0],
+  transition: { duration: 5, repeat: Infinity, ease: "easeInOut" },
 };
 
 export const pulseAnimation = {
-  scale: [1, 1.05, 1],
-  opacity: [0.7, 1, 0.7],
-  transition: {
-    duration: 4,
-    repeat: Infinity,
-    ease: "easeInOut",
-  },
+  scale:   [1, 1.04, 1],
+  opacity: [0.75, 1, 0.75],
+  transition: { duration: 3.5, repeat: Infinity, ease: "easeInOut" },
 };

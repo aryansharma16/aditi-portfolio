@@ -25,6 +25,8 @@ export default function Navbar() {
         }
       }
     };
+    // Set active section immediately on mount (no waiting for first scroll)
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);

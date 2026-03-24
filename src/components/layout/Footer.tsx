@@ -36,8 +36,8 @@ export default function Footer() {
             <a
               key={label}
               href={href}
-              target="_blank"
-              rel="noopener noreferrer"
+              target={label === "Email" ? undefined : "_blank"}
+              rel={label === "Email" ? undefined : "noopener noreferrer"}
               aria-label={label}
               className="inline-flex items-center justify-center min-w-11 min-h-11 rounded-lg text-zinc-400 dark:text-zinc-600 hover:text-violet-600 dark:hover:text-violet-400 transition-colors duration-200"
             >

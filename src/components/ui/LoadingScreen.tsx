@@ -8,17 +8,23 @@ export default function LoadingScreen() {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
+    let tid: ReturnType<typeof setTimeout>;
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
-          setTimeout(() => setLoading(false), 300);
+          tid = setTimeout(() => setLoading(false), 200);
           return 100;
         }
-        return prev + Math.random() * 18 + 5;
+        // Fast bursts early, slower near end for realism
+        const jump = prev < 70 ? Math.random() * 22 + 10 : Math.random() * 8 + 2;
+        return Math.min(prev + jump, 100);
       });
-    }, 80);
-    return () => clearInterval(interval);
+    }, 60);
+    return () => {
+      clearInterval(interval);
+      clearTimeout(tid);
+    };
   }, []);
 
   return (

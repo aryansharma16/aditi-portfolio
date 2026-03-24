@@ -7,16 +7,11 @@
    THEME DESIGN TOKENS
    ============================================================ */
 
-/* Light mode defaults */
 :root {
-  --font-sans:    var(--font-sans);
-  --font-display: var(--font-display);
-  --font-mono:    var(--font-mono);
-
   /* Surfaces */
   --bg:            #f2f1ff;
-  --bg-nav:        rgba(242, 241, 255, 0.88);
-  --bg-card:       rgba(255, 255, 255, 0.75);
+  --bg-nav:        rgba(242, 241, 255, 0.9);
+  --bg-card:       rgba(255, 255, 255, 0.6);
   --bg-card-solid: #ffffff;
   --bg-input:      rgba(0, 0, 0, 0.03);
   --bg-badge:      rgba(124, 58, 237, 0.07);
@@ -43,15 +38,13 @@
   --grad-b: #4f46e5;
 
   /* Misc */
-  --dot-color:     rgba(124, 58, 237, 0.14);
-  --scrollbar-bg:  #e4e4e7;
+  --dot-color:     rgba(124, 58, 237, 0.12);
   --orb-opacity:   0.12;
 }
 
-/* Dark mode overrides */
 html.dark {
   --bg:            #09090b;
-  --bg-nav:        rgba(9, 9, 11, 0.85);
+  --bg-nav:        rgba(9, 9, 11, 0.88);
   --bg-card:       rgba(255, 255, 255, 0.04);
   --bg-card-solid: #18181b;
   --bg-input:      rgba(255, 255, 255, 0.03);
@@ -74,28 +67,8 @@ html.dark {
   --grad-a: #a78bfa;
   --grad-b: #818cf8;
 
-  --dot-color:     rgba(255, 255, 255, 0.06);
-  --scrollbar-bg:  #27272a;
+  --dot-color:     rgba(255, 255, 255, 0.05);
   --orb-opacity:   1;
-}
-
-/* ============================================================
-   KEYFRAMES
-   ============================================================ */
-
-@keyframes shimmer {
-  0%   { background-position: -200% center; }
-  100% { background-position:  200% center; }
-}
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-20px); }
-}
-@keyframes blob {
-  0%   { transform: translate(0px, 0px) scale(1); }
-  33%  { transform: translate(30px, -50px) scale(1.1); }
-  66%  { transform: translate(-20px, 20px) scale(0.9); }
-  100% { transform: translate(0px, 0px) scale(1); }
 }
 
 /* ============================================================
@@ -104,8 +77,6 @@ html.dark {
 
 html {
   scroll-behavior: smooth;
-  /* Smooth theme transitions on the root element */
-  transition: background-color 0.3s ease;
 }
 
 body {
@@ -113,7 +84,8 @@ body {
   color: var(--t-primary);
   font-family: var(--font-sans), "Plus Jakarta Sans", system-ui, sans-serif;
   overflow-x: hidden;
-  transition: background-color 0.3s ease, color 0.2s ease;
+  /* Only transition what actually changes on theme toggle */
+  transition: background-color 0.25s ease, color 0.2s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -125,19 +97,17 @@ code, pre, .font-mono {
   font-family: var(--font-mono), "JetBrains Mono", "Fira Code", monospace;
 }
 
-/* Hide system cursor only on devices that have a precise pointer (mouse/trackpad) */
 @media (pointer: fine) {
-  body {
-    cursor: none;
-  }
+  body { cursor: none; }
 }
 
 /* ============================================================
-   THEME TRANSITIONS — applied to surfaces, not animations
+   THEME TRANSITIONS
+   Only elements that visually change on theme toggle.
+   Removed: section (unnecessary), body handled above.
    ============================================================ */
 
 .glass,
-section,
 header,
 footer,
 nav,
@@ -145,25 +115,22 @@ input,
 textarea,
 button:not([data-no-transition]) {
   transition:
-    background-color 0.25s ease,
-    background 0.25s ease,
-    border-color 0.25s ease,
-    color 0.2s ease,
-    box-shadow 0.25s ease;
+    background-color 0.22s ease,
+    background       0.22s ease,
+    border-color     0.22s ease,
+    color            0.18s ease,
+    box-shadow       0.22s ease;
 }
 
 /* ============================================================
    SCROLLBAR
    ============================================================ */
 
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(to bottom, #7c3aed, #4f46e5);
   border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #8b5cf6, #6366f1);
 }
 
 /* ============================================================
@@ -171,7 +138,7 @@ button:not([data-no-transition]) {
    ============================================================ */
 
 ::selection {
-  background: rgba(124, 58, 237, 0.3);
+  background: rgba(124, 58, 237, 0.25);
   color: var(--t-primary);
 }
 
@@ -179,7 +146,6 @@ button:not([data-no-transition]) {
    UTILITIES
    ============================================================ */
 
-/* Gradient text — shifts shade between light/dark modes */
 .gradient-text {
   background: linear-gradient(135deg, var(--grad-a), var(--grad-b));
   -webkit-background-clip: text;
@@ -187,28 +153,73 @@ button:not([data-no-transition]) {
   -webkit-text-fill-color: transparent;
 }
 
-/* Glass surface — theme-aware */
+/* Glass — reduced backdrop-filter from 14px → 8px (halves filter cost during scroll) */
 .glass {
   background: var(--bg-card);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-card);
 }
 
-/* Dot grid background */
 .dot-grid {
   background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 
-/* Glow helpers (used in dark, lighter in light) */
 .glow-violet { box-shadow: 0 0 20px rgba(124, 58, 237, calc(0.3 * var(--orb-opacity))); }
-.glow-indigo { box-shadow: 0 0 20px rgba(79, 70, 229, calc(0.3 * var(--orb-opacity))); }
+.glow-indigo { box-shadow: 0 0 20px rgba(79,  70, 229, calc(0.3 * var(--orb-opacity))); }
 
-/* Gradient border */
 .gradient-border {
   background: linear-gradient(var(--bg-card-solid), var(--bg-card-solid)) padding-box,
     linear-gradient(135deg, var(--grad-a), var(--grad-b)) border-box;
   border: 1px solid transparent;
+}
+
+/* ============================================================
+   BACKGROUND ORBS
+   STATIC — no animation. filter:blur on animated elements forces
+   a repaint every frame; making them static costs zero per-frame.
+   ============================================================ */
+
+.bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  /* blur is applied once at paint time, never recalculated */
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+.bg-orb-1 {
+  top: -100px; left: -100px;
+  width: 440px; height: 440px;
+  background: radial-gradient(circle, rgba(124,58,237,0.12) 0%, transparent 70%);
+}
+html.dark .bg-orb-1 {
+  background: radial-gradient(circle, rgba(124,58,237,0.19) 0%, transparent 70%);
+}
+
+.bg-orb-2 {
+  top: 35%; right: -100px;
+  width: 380px; height: 380px;
+  background: radial-gradient(circle, rgba(79,70,229,0.09) 0%, transparent 70%);
+}
+html.dark .bg-orb-2 {
+  background: radial-gradient(circle, rgba(79,70,229,0.15) 0%, transparent 70%);
+}
+
+.bg-orb-3 {
+  bottom: -100px; left: 30%;
+  width: 360px; height: 360px;
+  background: radial-gradient(circle, rgba(167,139,250,0.07) 0%, transparent 70%);
+}
+html.dark .bg-orb-3 {
+  background: radial-gradient(circle, rgba(167,139,250,0.12) 0%, transparent 70%);
+}
+
+.bg-top-line {
+  background: linear-gradient(90deg, transparent, rgba(124,58,237,0.18), transparent);
+}
+html.dark .bg-top-line {
+  background: linear-gradient(90deg, transparent, rgba(124,58,237,0.38), transparent);
 }
